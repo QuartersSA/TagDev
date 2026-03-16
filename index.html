@@ -200,6 +200,76 @@
       background: linear-gradient(90deg, #11ABE2, #0086FF); color: #fff;
     }
 
+    /* Mobile menu button */
+    .mobile-menu-btn {
+      display: none; width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04); cursor: pointer; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.6); transition: all .2s;
+    }
+    .mobile-menu-btn:hover { background: rgba(17,171,226,.1); color: #fff; }
+
+    /* Mobile nav panel */
+    .mobile-nav {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      background: rgba(13,20,32,.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 16px 24px 24px; flex-direction: column; gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      display: block; padding: 12px 16px; border-radius: 10px; color: rgba(255,255,255,.6);
+      font-size: 15px; text-decoration: none; transition: all .2s;
+    }
+    .mobile-nav a:hover { background: rgba(17,171,226,.08); color: #fff; }
+    .mobile-nav-actions {
+      display: flex; gap: 10px; margin-top: 12px; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .mobile-nav-actions a { flex: 1; text-align: center; justify-content: center; }
+
+    /* ─── MOBILE RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      /* Nav: hide links, show mobile layout */
+      .nav-links { display: none !important; }
+      .mobile-menu-btn { display: flex !important; }
+      .nav-actions .nav-signin { display: none !important; }
+      .nav-actions > .btn-primary { display: none !important; }
+
+      /* Hero: stack to single column */
+      .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
+      .hero-grid p { margin-left: auto; margin-right: auto; }
+      .hero-grid .hero-cta { justify-content: center; }
+      .hero-stats { justify-content: center !important; gap: 20px !important; }
+      .hero-dashboard { display: none !important; }
+
+      /* Features: single column */
+      .feat-row-1 { grid-template-columns: 1fr !important; }
+      .feat-row-2 { grid-template-columns: 1fr !important; }
+
+      /* Why section: single column */
+      .why-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .why-pills { grid-template-columns: 1fr !important; }
+
+      /* Pricing: single column */
+      .pricing-grid { grid-template-columns: 1fr !important; }
+      .pricing-grid > div:nth-child(2) { margin-top: 0 !important; }
+
+      /* Footer: 2 columns then stack */
+      .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+      .footer-grid > div:first-child { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column !important; align-items: center !important; text-align: center; }
+      .footer-bottom > div { flex-wrap: wrap; justify-content: center; }
+
+      /* CTA section */
+      .cta-box { padding: 48px 24px !important; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr !important; }
+      .hero-stats { flex-wrap: wrap !important; }
+      .lang-toggle button { padding: 5px 8px !important; font-size: 11px !important; }
+    }
+
     /* RTL adjustments */
     html[dir="rtl"] body { font-family: 'Noto Kufi Arabic', 'DM Sans', sans-serif; }
     html[dir="rtl"] .btn-primary svg,
@@ -243,7 +313,7 @@
     </a>
 
     <!-- Links -->
-    <ul style="display:flex;align-items:center;gap:32px;list-style:none;" class="hidden md:flex">
+    <ul style="display:flex;align-items:center;gap:32px;list-style:none;" class="hidden md:flex nav-links">
       <li><a href="#features" data-i18n="nav_features" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Features</a></li>
       <li><a href="#pricing" data-i18n="nav_pricing" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Pricing</a></li>
       <li><a href="#business" data-i18n="nav_business" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Business Type</a></li>
@@ -252,17 +322,33 @@
     </ul>
 
     <!-- Actions -->
-    <div style="display:flex;align-items:center;gap:10px;">
+    <div class="nav-actions" style="display:flex;align-items:center;gap:10px;">
+      <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
       <div class="lang-toggle">
         <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
         <button id="btn-ar" onclick="setLang('ar')">AR</button>
       </div>
-      <a href="#" data-i18n="nav_signin" style="color:rgba(255,255,255,.5);font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);transition:all .2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.25)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">Sign In</a>
+      <a href="#" data-i18n="nav_signin" class="nav-signin" style="color:rgba(255,255,255,.5);font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);transition:all .2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.25)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">Sign In</a>
       <a href="#" class="btn-primary" data-i18n="nav_getstarted" style="padding:9px 20px;font-size:13px;">Get Started</a>
     </div>
   </div>
 </nav>
 
+
+<!-- Mobile Nav Panel -->
+<div id="mobileNav" class="mobile-nav">
+  <a href="#features" data-i18n="nav_features" onclick="document.getElementById('mobileNav').classList.remove('open')">Features</a>
+  <a href="#pricing" data-i18n="nav_pricing" onclick="document.getElementById('mobileNav').classList.remove('open')">Pricing</a>
+  <a href="#business" data-i18n="nav_business" onclick="document.getElementById('mobileNav').classList.remove('open')">Business Type</a>
+  <a href="#faq" data-i18n="nav_faq" onclick="document.getElementById('mobileNav').classList.remove('open')">FAQ</a>
+  <a href="#contact" data-i18n="nav_contact" onclick="document.getElementById('mobileNav').classList.remove('open')">Contact Us</a>
+  <div class="mobile-nav-actions">
+    <a href="#" class="btn-ghost" data-i18n="nav_signin" style="font-size:14px;padding:10px 20px;">Sign In</a>
+    <a href="#" class="btn-primary" data-i18n="nav_getstarted" style="font-size:14px;padding:10px 20px;">Get Started</a>
+  </div>
+</div>
 
 <!-- ════════════════════════ HERO ════════════════════════ -->
 <section style="position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 24px 60px;overflow:hidden;">
@@ -272,7 +358,7 @@
   <div class="orb2" style="position:absolute;bottom:5%;left:0%;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,rgba(43,227,183,.1),transparent 70%);pointer-events:none;"></div>
   <div class="pulse-glow" style="position:absolute;top:40%;left:35%;width:700px;height:300px;border-radius:50%;background:radial-gradient(ellipse,rgba(17,171,226,.07),transparent 70%);pointer-events:none;filter:blur(30px);"></div>
 
-  <div style="max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1;">
+  <div class="hero-grid" style="max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1;">
 
     <!-- Left: copy -->
     <div>
@@ -291,7 +377,7 @@
         Overcome all challenges in the retail sector with TAG Dev, offering customized technology solutions to improve the performance of various types of businesses.
       </p>
 
-      <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;transition-delay:.24s;">
+      <div class="reveal hero-cta" style="display:flex;gap:12px;flex-wrap:wrap;transition-delay:.24s;">
         <a href="#" class="btn-primary" data-i18n="hero_cta1">
           Get Started
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
@@ -300,7 +386,7 @@
       </div>
 
       <!-- Trust stats -->
-      <div class="reveal stagger" style="display:flex;gap:32px;margin-top:44px;padding-top:32px;border-top:1px solid rgba(255,255,255,.06);transition-delay:.32s;">
+      <div class="reveal stagger hero-stats" style="display:flex;gap:32px;margin-top:44px;padding-top:32px;border-top:1px solid rgba(255,255,255,.06);transition-delay:.32s;">
         <div>
           <div style="font-size:22px;font-weight:700;" class="g-text">500+</div>
           <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;" data-i18n="stat_merchants">Active Merchants</div>
@@ -321,7 +407,7 @@
     </div>
 
     <!-- Right: Dashboard mockup -->
-    <div class="reveal" style="transition-delay:.2s;">
+    <div class="reveal hero-dashboard" style="transition-delay:.2s;">
       <div style="position:relative;">
         <!-- Glow behind -->
         <div style="position:absolute;inset:-20px;background:radial-gradient(ellipse at center,rgba(0,134,255,.12),transparent 70%);pointer-events:none;border-radius:50%;filter:blur(20px);"></div>
@@ -452,7 +538,7 @@
     </div>
 
     <!-- ROW 1: 2 large cards -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+    <div class="feat-row-1" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 
       <!-- ── Card 1: Dashboard Analytics ── -->
       <div class="reveal" style="background:#172030;border-radius:20px;border:1px solid rgba(255,255,255,.07);overflow:hidden;display:flex;flex-direction:column;">
@@ -588,7 +674,7 @@
     </div><!-- /ROW 1 -->
 
     <!-- ROW 2: 3 smaller cards -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+    <div class="feat-row-2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
 
       <!-- ── Card 3: Customer & Supplier ── -->
       <div class="reveal" style="background:#172030;border-radius:20px;border:1px solid rgba(255,255,255,.07);overflow:hidden;display:flex;flex-direction:column;transition-delay:.08s;">
@@ -751,7 +837,7 @@
 
 <!-- ════════════════════════ WHY TAGDEV ════════════════════════ -->
 <section style="padding:96px 24px;">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;">
+  <div class="why-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;">
 
     <!-- Left: feature list -->
     <div class="reveal">
@@ -763,7 +849,7 @@
         Say goodbye to bulky devices, maintenance hassles and data backup fees. Leave it all for the TagDev team — we store your data in the cloud to keep it safe and available, allowing you access anywhere, anytime.
       </p>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="why-pills" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
         <!-- Pills -->
         <div style="display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:12px;background:rgba(43,227,183,.06);border:1px solid rgba(43,227,183,.14);">
           <div style="width:7px;height:7px;border-radius:50%;background:#2BE3B7;flex-shrink:0;"></div>
@@ -871,7 +957,7 @@
       <h2 class="reveal" data-i18n-html="price_title" style="font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-.3px;margin-bottom:12px;transition-delay:.08s;">Simple, <span class="g-text">Transparent</span> Pricing</h2>
       <p class="reveal" data-i18n="price_desc" style="color:rgba(255,255,255,.4);font-size:16px;transition-delay:.16s;">Try free — no payment required until your trial period expires</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;">
+    <div class="pricing-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;">
 
       <!-- Basic -->
       <div class="g-card reveal" style="padding:32px;">
@@ -998,7 +1084,7 @@
 <!-- ════════════════════════ CTA SECTION ════════════════════════ -->
 <section id="contact" style="padding:96px 24px;">
   <div style="max-width:900px;margin:0 auto;">
-    <div class="reveal" style="border-radius:24px;overflow:hidden;position:relative;padding:72px 60px;text-align:center;background:linear-gradient(135deg,rgba(43,227,183,.08),rgba(17,171,226,.06),rgba(0,134,255,.1));border:1px solid rgba(255,255,255,.06);">
+    <div class="reveal cta-box" style="border-radius:24px;overflow:hidden;position:relative;padding:72px 60px;text-align:center;background:linear-gradient(135deg,rgba(43,227,183,.08),rgba(17,171,226,.06),rgba(0,134,255,.1));border:1px solid rgba(255,255,255,.06);">
       <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(43,227,183,.12),transparent);pointer-events:none;"></div>
       <div style="position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(0,134,255,.12),transparent);pointer-events:none;"></div>
 
@@ -1025,7 +1111,7 @@
 <!-- ════════════════════════ FOOTER ════════════════════════ -->
 <footer style="background:#080E18;padding:60px 24px 32px;border-top:1px solid rgba(255,255,255,.05);">
   <div style="max-width:1200px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;">
+    <div class="footer-grid" style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;">
 
       <!-- Brand -->
       <div>
@@ -1073,7 +1159,7 @@
     </div>
 
     <!-- Download + copyright -->
-    <div style="border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
       <p data-i18n="footer_copy" style="color:rgba(255,255,255,.2);font-size:12px;">Copyright © 2024 TagDev. All rights reserved.</p>
       <div style="display:flex;gap:10px;">
         <a href="#" style="display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(17,171,226,.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.4)'">
