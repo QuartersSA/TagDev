@@ -1,8 +1,10 @@
 export default function Reports() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Reports</h1>
-      <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>This page is under construction.</p>
+    <div className="space-y-4">
+      <h1 className="text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>Reports</h1>
+      <div className="rounded-2xl p-8 text-center" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p className="text-[14px]" style={{ color: 'var(--text-muted)' }}>Coming soon...</p>
+      </div>
     </div>
   )
 }
