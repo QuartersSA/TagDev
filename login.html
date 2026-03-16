@@ -263,7 +263,7 @@
     <div class="divider"><span data-i18n="login_or">or</span></div>
 
     <!-- Form -->
-    <form onsubmit="return false;">
+    <form onsubmit="localStorage.setItem('tagdev-auth','true');window.location.href='/dashboard';return false;">
       <div class="field">
         <label for="email" data-i18n="login_email_label">Email Address</label>
         <div class="input-wrap">
