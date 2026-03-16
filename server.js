@@ -6,11 +6,23 @@ const PORT = 8000;
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
 
 http.createServer((req, res) => {
-    let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    let filePath = path.join(__dirname, url.pathname === '/' ? 'index.html' : url.pathname);
+    // Prevent path traversal attacks
+    const resolved = path.resolve(filePath);
+    if (!resolved.startsWith(path.resolve(__dirname))) {
+        res.writeHead(403);
+        res.end('Forbidden');
+        return;
+    }
     let ext = path.extname(filePath);
     fs.readFile(filePath, (err, data) => {
         if (err) { res.writeHead(404); res.end('Not Found'); return; }
-        res.writeHead(200, { 'Content-Type': MIME[ext] || 'text/plain' });
+        res.writeHead(200, {
+            'Content-Type': MIME[ext] || 'text/plain',
+            'X-Content-Type-Options': 'nosniff',
+            'X-Frame-Options': 'SAMEORIGIN',
+        });
         res.end(data);
     });
 }).listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
