@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* ─── Custom Theme Variables ─── */
+:root {
+  --bg-primary: #F8FAFB;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F1F5F9;
+  --bg-sidebar: #FFFFFF;
+  --border: #E5E7EB;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --accent-aqua: #2BE3B7;
+  --accent-teal: #11ABE2;
+  --accent-blue: #0086FF;
+  --gradient: linear-gradient(90deg, #2BE3B7, #11ABE2, #0086FF);
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 72px;
+  --topbar-height: 64px;
+}
+
+.dark {
+  --bg-primary: #0D1420;
+  --bg-secondary: #131D2E;
+  --bg-tertiary: #172030;
+  --bg-sidebar: #0B1019;
+  --border: rgba(255,255,255,0.07);
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255,255,255,0.45);
+  --text-muted: rgba(255,255,255,0.25);
+  --card-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* ─── Base ─── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
+}
+
+html[dir="rtl"] body {
+  font-family: 'Noto Kufi Arabic', 'DM Sans', sans-serif;
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-align: start;
+  border: none;
+}
+
+/* ─── Gradient Text ─── */
+.g-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+.dark ::-webkit-scrollbar-track { background: #080E18; }
+.dark ::-webkit-scrollbar-thumb { background: rgba(17,171,226,.3); border-radius: 3px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+/* ─── Focus ─── */
+*:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Transitions ─── */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
