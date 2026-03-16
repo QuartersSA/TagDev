@@ -167,7 +167,7 @@
     .stagger.in > *:nth-child(7) { transition-delay: .35s; }
     .stagger.in > *:nth-child(8) { transition-delay: .4s; }
     .stagger.in > *:nth-child(9) { transition-delay: .45s; }
-    .stagger.in > * { opacity: 1; transform: translateY(0); }
+    .stagger.in > * { opacity: 1 !important; transform: translateY(0) !important; }
 
     /* 9. Biz pill pop-in */
     @keyframes pop-in {
@@ -232,6 +232,7 @@
     .lang-toggle button {
       padding: 6px 12px; font-size: 12px; font-weight: 600; border: none; cursor: pointer;
       background: transparent; color: rgba(255,255,255,.4); font-family: inherit; transition: all .25s;
+      min-height: 44px; min-width: 44px;
     }
     .lang-toggle button.active {
       background: linear-gradient(90deg, #11ABE2, #0086FF); color: #fff;
@@ -299,6 +300,13 @@
 
       /* CTA section */
       .cta-box { padding: 48px 24px !important; }
+    }
+
+    /* Tablet breakpoint */
+    @media (max-width: 1024px) {
+      .feat-row-2 { grid-template-columns: 1fr 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+      .footer-grid > div:first-child { grid-column: 1 / -1; }
     }
 
     @media (max-width: 480px) {
@@ -553,11 +561,11 @@
           <div style="font-size:9px;color:rgba(255,255,255,.3);margin-bottom:6px;">Invoice #558612</div>
           <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
             <span style="color:rgba(255,255,255,.5);">Brown Box</span>
-            <span style="color:#fff;">$213.19</span>
+            <span style="color:#fff;">213.19 SAR</span>
           </div>
           <div style="border-top:1px solid rgba(255,255,255,.06);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;">
             <span style="font-size:10px;color:rgba(255,255,255,.35);">Subtotal</span>
-            <span style="font-size:12px;font-weight:700;color:#2BE3B7;">$3,863,800</span>
+            <span style="font-size:12px;font-weight:700;color:#2BE3B7;">3,863,800 SAR</span>
           </div>
         </div>
       </div>
@@ -703,8 +711,8 @@
                 </div>
                 <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.75);">Brown Box</span>
               </div>
-              <span style="font-size:11px;font-weight:600;color:#fff;text-align:center;">$ 213,19</span>
-              <span style="font-size:12px;font-weight:700;color:#fff;text-align:right;">$ 3,863,800</span>
+              <span style="font-size:11px;font-weight:600;color:#fff;text-align:center;">213.19 SAR</span>
+              <span style="font-size:12px;font-weight:700;color:#fff;text-align:right;">3,863,800 SAR</span>
             </div>
           </div>
         </div>
@@ -1206,7 +1214,8 @@
 
     <!-- Download + copyright -->
     <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p data-i18n="footer_copy" style="color:rgba(255,255,255,.2);font-size:12px;">Copyright © 2024 TagDev. All rights reserved.</p>
+      <p data-i18n="footer_copy" id="footer-copy" style="color:rgba(255,255,255,.2);font-size:12px;">Copyright © 2024 TagDev. All rights reserved.</p>
+      <script>document.getElementById('footer-copy').textContent='Copyright © '+new Date().getFullYear()+' TagDev. All rights reserved.';</script>
       <div style="display:flex;gap:10px;">
         <a href="#" style="display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(17,171,226,.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.4)'">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 18.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm3.5-7H12m0 0l2 2m-2-2l2-2"/></svg>
@@ -1238,12 +1247,19 @@
   (function(){
     const c = document.getElementById('particles');
     if (!c) return;
+    // Skip particles if user prefers reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ctx = c.getContext('2d');
-    let w, h, pts = [];
+    let w, h, pts = [], animId = null;
+    // Fewer particles on mobile for performance
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 15 : 40;
+    const lineDistance = isMobile ? 100 : 150;
+
     function resize(){ w = c.width = innerWidth; h = c.height = innerHeight; }
     resize();
     window.addEventListener('resize', resize);
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < particleCount; i++) {
       pts.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5+.5,
         dx: (Math.random()-.5)*.3, dy: (Math.random()-.5)*.3,
         o: Math.random()*.4+.1 });
@@ -1264,19 +1280,24 @@
         for(let j=i+1;j<pts.length;j++){
           const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
           const dist=Math.sqrt(dx*dx+dy*dy);
-          if(dist<150){
+          if(dist<lineDistance){
             ctx.beginPath();
             ctx.moveTo(pts[i].x,pts[i].y);
             ctx.lineTo(pts[j].x,pts[j].y);
-            ctx.strokeStyle=`rgba(43,227,183,${.06*(1-dist/150)})`;
+            ctx.strokeStyle=`rgba(43,227,183,${.06*(1-dist/lineDistance)})`;
             ctx.lineWidth=.5;
             ctx.stroke();
           }
         }
       }
-      requestAnimationFrame(draw);
+      animId = requestAnimationFrame(draw);
     }
     draw();
+    // Pause when tab is hidden to save battery
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { cancelAnimationFrame(animId); animId = null; }
+      else if (!animId) draw();
+    });
   })();
 
   // ─── COUNTER ANIMATION ───
@@ -1313,13 +1334,21 @@
     if (/^\d/.test(el.textContent.trim())) counterIO.observe(el);
   });
 
-  // ─── PARALLAX on hero orbs ───
+  // ─── PARALLAX on hero orbs (throttled with rAF) ───
+  let parallaxTicking = false;
+  const orbs = document.querySelectorAll('.orb1,.orb2,.pulse-glow');
   window.addEventListener('scroll', () => {
-    const y = scrollY;
-    document.querySelectorAll('.orb1,.orb2,.pulse-glow').forEach((orb,i) => {
-      const speed = [0.03, 0.02, 0.015][i] || 0.02;
-      orb.style.transform = `translateY(${y * speed}px)`;
-    });
+    if (!parallaxTicking) {
+      parallaxTicking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY;
+        orbs.forEach((orb,i) => {
+          const speed = [0.03, 0.02, 0.015][i] || 0.02;
+          orb.style.transform = `translateY(${y * speed}px)`;
+        });
+        parallaxTicking = false;
+      });
+    }
   }, { passive: true });
 
   // ─── TILT on feature cards ───
@@ -1410,7 +1439,7 @@
       footer_company: 'Company', footer_about: 'About Us', footer_careers: 'Careers', footer_faq: 'FAQ',
       footer_links: 'Links', footer_legal: 'Legal',
       footer_terms: 'Terms of Service', footer_privacy: 'Privacy Policy', footer_cookies: 'Cookies', footer_licenses: 'Licenses',
-      footer_copy: 'Copyright \u00a9 2024 TagDev. All rights reserved.',
+      footer_copy: `Copyright \u00a9 ${new Date().getFullYear()} TagDev. All rights reserved.`,
       footer_dl_pos: 'Download POS App', footer_dl_dash: 'Download Dashboard App',
     },
     ar: {
@@ -1482,7 +1511,7 @@
       footer_company: '\u0627\u0644\u0634\u0631\u0643\u0629', footer_about: '\u0645\u0646 \u0646\u062d\u0646', footer_careers: '\u0627\u0644\u0648\u0638\u0627\u0626\u0641', footer_faq: '\u0627\u0644\u0623\u0633\u0626\u0644\u0629 \u0627\u0644\u0634\u0627\u0626\u0639\u0629',
       footer_links: '\u0631\u0648\u0627\u0628\u0637', footer_legal: '\u0642\u0627\u0646\u0648\u0646\u064a',
       footer_terms: '\u0634\u0631\u0648\u0637 \u0627\u0644\u062e\u062f\u0645\u0629', footer_privacy: '\u0633\u064a\u0627\u0633\u0629 \u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629', footer_cookies: '\u0645\u0644\u0641\u0627\u062a \u062a\u0639\u0631\u064a\u0641 \u0627\u0644\u0627\u0631\u062a\u0628\u0627\u0637', footer_licenses: '\u0627\u0644\u062a\u0631\u0627\u062e\u064a\u0635',
-      footer_copy: '\u062d\u0642\u0648\u0642 \u0627\u0644\u0646\u0634\u0631 \u00a9 2024 TagDev. \u062c\u0645\u064a\u0639 \u0627\u0644\u062d\u0642\u0648\u0642 \u0645\u062d\u0641\u0648\u0638\u0629.',
+      footer_copy: `\u062d\u0642\u0648\u0642 \u0627\u0644\u0646\u0634\u0631 \u00a9 ${new Date().getFullYear()} TagDev. \u062c\u0645\u064a\u0639 \u0627\u0644\u062d\u0642\u0648\u0642 \u0645\u062d\u0641\u0648\u0638\u0629.`,
       footer_dl_pos: '\u062a\u062d\u0645\u064a\u0644 \u062a\u0637\u0628\u064a\u0642 \u0646\u0642\u0627\u0637 \u0627\u0644\u0628\u064a\u0639', footer_dl_dash: '\u062a\u062d\u0645\u064a\u0644 \u062a\u0637\u0628\u064a\u0642 \u0644\u0648\u062d\u0629 \u0627\u0644\u062a\u062d\u0643\u0645',
     }
   };
