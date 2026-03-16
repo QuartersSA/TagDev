@@ -17,7 +17,14 @@ http.createServer((req, res) => {
     }
     let ext = path.extname(filePath);
     fs.readFile(filePath, (err, data) => {
-        if (err) { res.writeHead(404); res.end('Not Found'); return; }
+        if (err) {
+            const notFoundPath = path.join(__dirname, '404.html');
+            fs.readFile(notFoundPath, (err404, data404) => {
+                res.writeHead(404, { 'Content-Type': 'text/html' });
+                res.end(err404 ? 'Not Found' : data404);
+            });
+            return;
+        }
         res.writeHead(200, {
             'Content-Type': MIME[ext] || 'text/plain',
             'X-Content-Type-Options': 'nosniff',

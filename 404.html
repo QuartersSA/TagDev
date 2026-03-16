@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | TagDev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0D1420;
+            color: #ffffff;
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 560px;
+            width: 100%;
+        }
+
+        .logo {
+            margin-bottom: 3rem;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .error-code {
+            font-size: clamp(6rem, 20vw, 10rem);
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, #2BE3B7, #0086FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #11ABE2, #0086FF);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        [dir="rtl"] .container {
+            direction: rtl;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <a href="/">
+                <img src="/logo-white.svg" alt="TagDev">
+            </a>
+        </div>
+        <h1 class="error-code">404</h1>
+        <h2 class="subtitle" data-en="Page Not Found" data-ar="الصفحة غير موجودة">Page Not Found</h2>
+        <p class="description" data-en="The page you're looking for doesn't exist or has been moved." data-ar="الصفحة التي تبحث عنها غير موجودة أو تم نقلها.">The page you're looking for doesn't exist or has been moved.</p>
+        <a href="/" class="btn-primary" data-en="Back to Home" data-ar="العودة للرئيسية">Back to Home</a>
+    </div>
+
+    <script>
+        (function() {
+            var isArabic = navigator.language && navigator.language.startsWith('ar');
+            var params = new URLSearchParams(window.location.search);
+            var lang = params.get('lang');
+            if (lang === 'ar') isArabic = true;
+            if (lang === 'en') isArabic = false;
+
+            if (isArabic) {
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                var els = document.querySelectorAll('[data-ar]');
+                for (var i = 0; i < els.length; i++) {
+                    els[i].textContent = els[i].getAttribute('data-ar');
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

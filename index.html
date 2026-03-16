@@ -18,19 +18,64 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['"DM Sans"', 'sans-serif'] },
-          colors: {
-            navy:  { DEFAULT: '#0D1420', deep: '#080E18', surface: '#131D2E', card: '#172030' },
-            brand: { aqua: '#2BE3B7', teal: '#11ABE2', blue: '#0086FF' },
-          },
-        },
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TagDev",
+    "url": "https://tagdev.com",
+    "logo": "https://tagdev.com/logo-white.svg",
+    "description": "Saudi Arabia's #1 cloud-based POS system for restaurants, shops, supermarkets and more.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "availableLanguage": ["English", "Arabic"],
+      "areaServed": "SA"
+    },
+    "sameAs": []
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I try TagDev for free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Contact us to try the system — no payment is required until your trial period expires. You get full access to all features during the trial."
+        }
       },
-    }
+      {
+        "@type": "Question",
+        "name": "Does TagDev work offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, TagDev continues to operate in offline mode. Your data syncs automatically once the connection is restored."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What payment methods are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TagDev supports cash, mada, Visa, Mastercard, Apple Pay, STC Pay, and more. Multiple payment methods can be configured per business."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I migrate my data from another system?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Our team provides free data migration. Switching platforms? We'll get you fully set up with zero data loss."
+        }
+      }
+    ]
+  }
   </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -341,6 +386,47 @@
 
     /* Why check item */
     .why-item { display: flex; align-items: flex-start; gap: 14px; }
+
+    /* Nav link hover (replaces inline onmouseover/onmouseout) */
+    .nav-link { color: rgba(255,255,255,.55); font-size: 14px; text-decoration: none; transition: color .2s; }
+    .nav-link:hover { color: #fff; }
+
+    /* Footer link hover */
+    .footer-link { color: rgba(255,255,255,.5); font-size: 13px; text-decoration: none; transition: color .2s; }
+    .footer-link:hover { color: #fff; }
+
+    /* Sign-in button hover */
+    .nav-signin { transition: all .2s; }
+    .nav-signin:hover { color: #fff !important; border-color: rgba(255,255,255,.25) !important; }
+
+    /* Social link hover */
+    .social-link {
+      width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,.06);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.3); text-decoration: none; transition: all .2s;
+    }
+    .social-link:hover { background: rgba(17,171,226,.15); color: #11ABE2; }
+
+    /* Download link hover */
+    .dl-link {
+      display: flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 8px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.4); font-size: 12px; text-decoration: none; transition: all .2s;
+    }
+    .dl-link:hover { background: rgba(17,171,226,.08); color: #fff; }
+
+    /* Hamburger menu animation */
+    .mobile-menu-btn .hamburger-line {
+      display: block; width: 18px; height: 2px; background: currentColor;
+      border-radius: 1px; transition: all .3s ease;
+    }
+    .mobile-menu-btn.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+    .mobile-menu-btn.active .hamburger-line:nth-child(2) { opacity: 0; }
+    .mobile-menu-btn.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+    /* Tailwind replacement: hidden on mobile, flex on md+ */
+    .md-flex { display: none; }
+    @media (min-width: 769px) { .md-flex { display: flex; } }
   </style>
 </head>
 <body>
@@ -364,24 +450,28 @@
     </a>
 
     <!-- Links -->
-    <ul style="display:flex;align-items:center;gap:32px;list-style:none;" class="hidden md:flex nav-links">
-      <li><a href="#features" data-i18n="nav_features" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Features</a></li>
-      <li><a href="#pricing" data-i18n="nav_pricing" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Pricing</a></li>
-      <li><a href="#business" data-i18n="nav_business" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Business Type</a></li>
-      <li><a href="#faq" data-i18n="nav_faq" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">FAQ</a></li>
-      <li><a href="#contact" data-i18n="nav_contact" style="color:rgba(255,255,255,.55);font-size:14px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Contact Us</a></li>
+    <ul style="align-items:center;gap:32px;list-style:none;" class="md-flex nav-links">
+      <li><a href="#features" data-i18n="nav_features" class="nav-link">Features</a></li>
+      <li><a href="#pricing" data-i18n="nav_pricing" class="nav-link">Pricing</a></li>
+      <li><a href="#business" data-i18n="nav_business" class="nav-link">Business Type</a></li>
+      <li><a href="#faq" data-i18n="nav_faq" class="nav-link">FAQ</a></li>
+      <li><a href="#contact" data-i18n="nav_contact" class="nav-link">Contact Us</a></li>
     </ul>
 
     <!-- Actions -->
     <div class="nav-actions" style="display:flex;align-items:center;gap:10px;">
-      <button class="mobile-menu-btn" onclick="this.setAttribute('aria-expanded',document.getElementById('mobileNav').classList.toggle('open'))" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <button class="mobile-menu-btn" onclick="this.classList.toggle('active');var m=document.getElementById('mobileNav');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav">
+        <span style="display:flex;flex-direction:column;gap:4px;align-items:center;">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
       </button>
       <div class="lang-toggle">
         <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
         <button id="btn-ar" onclick="setLang('ar')">AR</button>
       </div>
-      <a href="#" data-i18n="nav_signin" class="nav-signin" style="color:rgba(255,255,255,.5);font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);transition:all .2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.25)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">Sign In</a>
+      <a href="#" data-i18n="nav_signin" class="nav-signin" style="color:rgba(255,255,255,.5);font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);">Sign In</a>
       <a href="#" class="btn-primary" data-i18n="nav_getstarted" style="padding:9px 20px;font-size:13px;">Get Started</a>
     </div>
   </div>
@@ -1172,56 +1262,56 @@
         <div style="margin-bottom:16px;">
           <img src="logo-white.svg" alt="TagDev" style="height:32px;width:auto;" />
         </div>
-        <p data-i18n="footer_desc" style="color:rgba(255,255,255,.25);font-size:13px;line-height:1.7;max-width:220px;margin-bottom:20px;">Your All-in-One POS Solution to elevate retail efficiency and growth.</p>
+        <p data-i18n="footer_desc" style="color:rgba(255,255,255,.5);font-size:13px;line-height:1.7;max-width:220px;margin-bottom:20px;">Your All-in-One POS Solution to elevate retail efficiency and growth.</p>
         <div style="display:flex;gap:10px;">
-          <a href="#" aria-label="X (Twitter)" style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(17,171,226,.15)';this.style.color='#11ABE2'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.3)'">
+          <a href="#" aria-label="X (Twitter)" class="social-link">
             <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="#" aria-label="LinkedIn" style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(17,171,226,.15)';this.style.color='#11ABE2'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.3)'">
+          <a href="#" aria-label="LinkedIn" class="social-link">
             <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
         </div>
       </div>
 
       <div>
-        <h4 data-i18n="footer_company" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;">Company</h4>
+        <h4 data-i18n="footer_company" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;">Company</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:11px;">
-          <li><a href="#" data-i18n="footer_about" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">About Us</a></li>
-          <li><a href="#" data-i18n="footer_careers" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Careers</a></li>
-          <li><a href="#faq" data-i18n="footer_faq" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">FAQ</a></li>
+          <li><a href="#" data-i18n="footer_about" class="footer-link">About Us</a></li>
+          <li><a href="#" data-i18n="footer_careers" class="footer-link">Careers</a></li>
+          <li><a href="#faq" data-i18n="footer_faq" class="footer-link">FAQ</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 data-i18n="footer_links" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;">Links</h4>
+        <h4 data-i18n="footer_links" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;">Links</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:11px;">
-          <li><a href="#features" data-i18n="nav_features" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Features</a></li>
-          <li><a href="#pricing" data-i18n="nav_pricing" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Pricing</a></li>
-          <li><a href="#contact" data-i18n="nav_contact" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Contact Us</a></li>
+          <li><a href="#features" data-i18n="nav_features" class="footer-link">Features</a></li>
+          <li><a href="#pricing" data-i18n="nav_pricing" class="footer-link">Pricing</a></li>
+          <li><a href="#contact" data-i18n="nav_contact" class="footer-link">Contact Us</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 data-i18n="footer_legal" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;">Legal</h4>
+        <h4 data-i18n="footer_legal" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;">Legal</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:11px;">
-          <li><a href="#" data-i18n="footer_terms" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Terms of Service</a></li>
-          <li><a href="#" data-i18n="footer_privacy" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Privacy Policy</a></li>
-          <li><a href="#" data-i18n="footer_cookies" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Cookies</a></li>
-          <li><a href="#" data-i18n="footer_licenses" style="color:rgba(255,255,255,.3);font-size:13px;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.3)'">Licenses</a></li>
+          <li><a href="#" data-i18n="footer_terms" class="footer-link">Terms of Service</a></li>
+          <li><a href="#" data-i18n="footer_privacy" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" data-i18n="footer_cookies" class="footer-link">Cookies</a></li>
+          <li><a href="#" data-i18n="footer_licenses" class="footer-link">Licenses</a></li>
         </ul>
       </div>
     </div>
 
     <!-- Download + copyright -->
     <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p data-i18n="footer_copy" id="footer-copy" style="color:rgba(255,255,255,.2);font-size:12px;">Copyright © 2024 TagDev. All rights reserved.</p>
+      <p data-i18n="footer_copy" id="footer-copy" style="color:rgba(255,255,255,.45);font-size:12px;">Copyright © 2024 TagDev. All rights reserved.</p>
       <script>document.getElementById('footer-copy').textContent='Copyright © '+new Date().getFullYear()+' TagDev. All rights reserved.';</script>
       <div style="display:flex;gap:10px;">
-        <a href="#" style="display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(17,171,226,.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.4)'">
+        <a href="#" class="dl-link">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 18.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm3.5-7H12m0 0l2 2m-2-2l2-2"/></svg>
           <span data-i18n="footer_dl_pos">Download POS App</span>
         </a>
-        <a href="#" style="display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);font-size:12px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='rgba(17,171,226,.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.4)'">
+        <a href="#" class="dl-link">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
           <span data-i18n="footer_dl_dash">Download Dashboard App</span>
         </a>
