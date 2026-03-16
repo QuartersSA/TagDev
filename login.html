@@ -175,8 +175,24 @@
       outline: 2px solid #11ABE2; outline-offset: 2px; border-radius: 4px;
     }
 
+    /* ─── Language Toggle ─── */
+    .lang-toggle {
+      display: flex; align-items: center; border-radius: 8px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04);
+    }
+    .lang-toggle button {
+      padding: 6px 12px; font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+      background: transparent; color: rgba(255,255,255,.4); font-family: inherit;
+      transition: all .25s; min-height: 36px; min-width: 36px;
+    }
+    .lang-toggle button.active {
+      background: linear-gradient(90deg, #11ABE2, #0086FF); color: #fff;
+    }
+
     /* ─── RTL ─── */
     html[dir="rtl"] body { font-family: 'Noto Kufi Arabic', 'DM Sans', sans-serif; }
+    html[dir="rtl"] .nav-back svg { transform: scaleX(-1); }
+    html[dir="rtl"] .btn-primary svg { transform: scaleX(-1); }
 
     /* ─── Reduced Motion ─── */
     @media (prefers-reduced-motion: reduce) {
@@ -201,10 +217,16 @@
 <nav>
   <div class="nav-inner">
     <a href="/"><img src="logo-white.svg" alt="TagDev" /></a>
-    <a href="/" class="nav-back">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19 12H5m0 0l7 7m-7-7l7-7"/></svg>
-      Back to Home
-    </a>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="lang-toggle">
+        <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+        <button id="btn-ar" onclick="setLang('ar')">AR</button>
+      </div>
+      <a href="/" class="nav-back" data-i18n="back_home">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19 12H5m0 0l7 7m-7-7l7-7"/></svg>
+        Back to Home
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -220,39 +242,39 @@
   <div class="login-card">
     <div class="badge">
       <span style="width:6px;height:6px;border-radius:50%;background:#2BE3B7;"></span>
-      Welcome Back
+      <span data-i18n="login_badge">Welcome Back</span>
     </div>
 
-    <h1>Sign in to <span class="g-text">TagDev</span></h1>
-    <p class="sub">Access your POS dashboard, manage sales, inventory and reports.</p>
+    <h1 data-i18n-html="login_title">Sign in to <span class="g-text">TagDev</span></h1>
+    <p class="sub" data-i18n="login_sub">Access your POS dashboard, manage sales, inventory and reports.</p>
 
     <!-- Social Login -->
     <div class="social-row">
       <button class="social-btn" type="button">
         <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Google
+        <span data-i18n="login_google">Google</span>
       </button>
       <button class="social-btn" type="button">
         <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path fill="#fff" d="M16.67 15.47l.53-3.47h-3.33V9.87c0-.95.46-1.87 1.95-1.87h1.51V5.08s-1.37-.23-2.68-.23c-2.73 0-4.52 1.66-4.52 4.66V12H7.07v3.47h3.06V24h3.77v-8.53h2.77z"/></svg>
-        Facebook
+        <span data-i18n="login_facebook">Facebook</span>
       </button>
     </div>
 
-    <div class="divider"><span>or</span></div>
+    <div class="divider"><span data-i18n="login_or">or</span></div>
 
     <!-- Form -->
     <form onsubmit="return false;">
       <div class="field">
-        <label for="email">Email Address</label>
+        <label for="email" data-i18n="login_email_label">Email Address</label>
         <div class="input-wrap">
-          <input type="email" id="email" placeholder="name@company.com" autocomplete="email" />
+          <input type="email" id="email" data-i18n-placeholder="login_email_ph" placeholder="name@company.com" autocomplete="email" />
         </div>
       </div>
 
       <div class="field">
-        <label for="password">Password</label>
+        <label for="password" data-i18n="login_pw_label">Password</label>
         <div class="input-wrap">
-          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" />
+          <input type="password" id="password" data-i18n-placeholder="login_pw_ph" placeholder="Enter your password" autocomplete="current-password" />
           <button type="button" class="toggle-pw" aria-label="Toggle password visibility" onclick="const p=document.getElementById('password');p.type=p.type==='password'?'text':'password'">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </button>
@@ -260,23 +282,118 @@
       </div>
 
       <div class="options-row">
-        <label class="remember"><input type="checkbox" /> Remember me</label>
-        <a href="#" class="forgot">Forgot password?</a>
+        <label class="remember"><input type="checkbox" /> <span data-i18n="login_remember">Remember me</span></label>
+        <a href="#" class="forgot" data-i18n="login_forgot">Forgot password?</a>
       </div>
 
-      <button type="submit" class="btn-primary">
+      <button type="submit" class="btn-primary" data-i18n="login_btn">
         Sign In
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
       </button>
     </form>
 
-    <p class="signup-text">Don't have an account? <a href="#">Create Account</a></p>
+    <p class="signup-text"><span data-i18n="login_no_account">Don't have an account?</span> <a href="#" data-i18n="login_signup">Create Account</a></p>
   </div>
 </section>
 
 <!-- Footer -->
-<div class="login-footer" id="login-footer"></div>
-<script>document.getElementById('login-footer').textContent='Copyright \u00a9 '+new Date().getFullYear()+' TagDev. All rights reserved.';</script>
+<div class="login-footer" data-i18n="login_footer" id="login-footer"></div>
+
+<!-- ═══ Language System ═══ -->
+<script>
+const T = {
+  en: {
+    back_home: 'Back to Home',
+    login_badge: 'Welcome Back',
+    login_title: 'Sign in to <span class="g-text">TagDev</span>',
+    login_sub: 'Access your POS dashboard, manage sales, inventory and reports.',
+    login_google: 'Google',
+    login_facebook: 'Facebook',
+    login_or: 'or',
+    login_email_label: 'Email Address',
+    login_email_ph: 'name@company.com',
+    login_pw_label: 'Password',
+    login_pw_ph: 'Enter your password',
+    login_remember: 'Remember me',
+    login_forgot: 'Forgot password?',
+    login_btn: 'Sign In',
+    login_no_account: "Don't have an account?",
+    login_signup: 'Create Account',
+    login_footer: `Copyright \u00a9 ${new Date().getFullYear()} TagDev. All rights reserved.`,
+    login_pw_toggle: 'Toggle password visibility',
+  },
+  ar: {
+    back_home: '\u0627\u0644\u0639\u0648\u062f\u0629 \u0644\u0644\u0631\u0626\u064a\u0633\u064a\u0629',
+    login_badge: '\u0645\u0631\u062d\u0628\u0627\u064b \u0628\u0639\u0648\u062f\u062a\u0643',
+    login_title: '\u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644 \u0625\u0644\u0649 <span class="g-text">TagDev</span>',
+    login_sub: '\u0627\u062f\u062e\u0644 \u0625\u0644\u0649 \u0644\u0648\u062d\u0629 \u0627\u0644\u062a\u062d\u0643\u0645 \u0644\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0645\u0628\u064a\u0639\u0627\u062a \u0648\u0627\u0644\u0645\u062e\u0632\u0648\u0646 \u0648\u0627\u0644\u062a\u0642\u0627\u0631\u064a\u0631.',
+    login_google: '\u062c\u0648\u062c\u0644',
+    login_facebook: '\u0641\u064a\u0633\u0628\u0648\u0643',
+    login_or: '\u0623\u0648',
+    login_email_label: '\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a',
+    login_email_ph: 'name@company.com',
+    login_pw_label: '\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+    login_pw_ph: '\u0623\u062f\u062e\u0644 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+    login_remember: '\u062a\u0630\u0643\u0631\u0646\u064a',
+    login_forgot: '\u0646\u0633\u064a\u062a \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631\u061f',
+    login_btn: '\u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644',
+    login_no_account: '\u0644\u064a\u0633 \u0644\u062f\u064a\u0643 \u062d\u0633\u0627\u0628\u061f',
+    login_signup: '\u0625\u0646\u0634\u0627\u0621 \u062d\u0633\u0627\u0628',
+    login_footer: `\u062d\u0642\u0648\u0642 \u0627\u0644\u0646\u0634\u0631 \u00a9 ${new Date().getFullYear()} TagDev. \u062c\u0645\u064a\u0639 \u0627\u0644\u062d\u0642\u0648\u0642 \u0645\u062d\u0641\u0648\u0638\u0629.`,
+    login_pw_toggle: '\u0625\u0638\u0647\u0627\u0631/\u0625\u062e\u0641\u0627\u0621 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+  }
+};
+
+function setLang(lang) {
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = lang === 'ar' ? 'TagDev \u2014 \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644' : 'TagDev \u2014 Sign In';
+
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+
+  // Update text
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      const svg = el.querySelector('svg');
+      if (svg) {
+        const textNode = el.childNodes[0];
+        if (textNode && textNode.nodeType === 3) {
+          textNode.textContent = t[key] + '\n        ';
+        } else {
+          el.insertBefore(document.createTextNode(t[key] + '\n        '), svg);
+        }
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+
+  // Update innerHTML (titles with <span>)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+
+  // Update aria-labels
+  const pwBtn = document.querySelector('.toggle-pw');
+  if (pwBtn) pwBtn.setAttribute('aria-label', t.login_pw_toggle);
+
+  localStorage.setItem('tagdev-lang', lang);
+}
+
+// Auto-detect saved language from landing page
+const savedLang = localStorage.getItem('tagdev-lang');
+if (savedLang && savedLang !== 'en') setLang(savedLang);
+</script>
 
 <!-- Particles Script -->
 <script>
