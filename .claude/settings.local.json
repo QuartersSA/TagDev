@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(find C:Usersym_DownloadsTagDev -type f \\\\\\(-name vite.config.* -o -name next.config.* -o -name webpack.config.* -o -name tsconfig.json -o -name .env* \\\\\\))",
+      "Bash(find C:Usersym_DownloadsTagDev -type f -name *.json -o -name *.yml -o -name *.yaml)",
+      "Bash(git init:*)",
+      "Bash(git remote:*)",
+      "Bash(git pull:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(start \"\" \"C:/Users/ym_/Downloads/TagDev/index.html\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx --version)",
+      "Bash(git push:*)",
+      "Bash(python -c \":*)",
+      "Bash(python3 -c \":*)",
+      "Bash(where py:*)",
+      "Bash(py --version)",
+      "Bash(node -e \"const fs = require\\(''fs''\\); const stats = fs.statSync\\(''C:/Users/ym_/Downloads/Landing Page - Desktop \\(1\\).pdf''\\); console.log\\(''Size:'', \\(stats.size/1024/1024\\).toFixed\\(1\\), ''MB''\\);\")",
+      "Bash(node -e \":*)",
+      "Bash(where magick:*)",
+      "Bash(where convert:*)",
+      "Bash(where pdftoppm:*)",
+      "Bash(where gs:*)",
+      "Bash(npm list:*)",
+      "Bash(node -e \"require\\(''''pdfjs-dist''''\\)\")",
+      "Bash(npm install:*)",
+      "Bash(node extract-pdf.mjs)",
+      "Bash(node dark-theme.js)",
+      "Bash(\"C:\\\\Users\\\\ym_\\\\Downloads\\\\TagDev\\\\logo-white.svg\")",
+      "Bash(npx claude-code-templates@latest --agent development-team/frontend-developer)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)"
+    ]
+  }
+}
